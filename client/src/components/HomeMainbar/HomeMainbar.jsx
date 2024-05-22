@@ -2,76 +2,21 @@ import React from "react";
 import "./HomeMainbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import QuestionList from "./QuestionList";
-
+import { useSelector } from "react-redux";
 const HomeMainbar = () => {
-  var questionsList = [
-    {
-      _id: 1,
-      upVotes: 3,
-      downVotes:2,
-      noOfAnswers: 2,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId:1,
-      askedOn: "jan 1",
-      answer: [{
-        answerBody: "Answer",
-        userAnswerd: 'Kumar',
-        answeredOn:'jan 2',
-        userId: 2,
-      }]
-    },
-    {
-      _id: 3,
-      upVotes: 3,
-      downVotes:2,
-      noOfAnswers: 4,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId:1,
-      askedOn: "jan 1",
-      answer: [{
-        answerBody: "Answer",
-        userAnswerd: 'Kumar',
-        answeredOn:'jan 2',
-        userId: 2,
-      }]
-    },{
-      _id: 2,
-      upVotes: 3,
-      downVotes:2,
-      noOfAnswers: 10,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId:1,
-      askedOn: "jan 1",
-      answer: [{
-        answerBody: "Answer",
-        userAnswerd: 'Kumar',
-        answeredOn:'jan 2',
-        userId: 2,
-      }]
-    }
-  ];
+  const questionsList = useSelector((state) => state.questionsReducer);
   const location = useLocation();
   const user = 1;
   const navigate = useNavigate();
-  
+
   const checkAuth = () => {
-    if (user === null){
+    if (user === null) {
       alert(" login or signup to ask a question");
       navigate("/Auth");
+    } else {
+      navigate("/AskQuestion");
     }
-    else {
-      navigate('/AskQuestion')
-    }
-  }
+  };
 
   return (
     <div className="main-bar">
@@ -86,12 +31,12 @@ const HomeMainbar = () => {
         </button>
       </div>
       <div>
-        {questionsList === null ? (
+        {questionsList.data === null ? (
           <h1>Loading...</h1>
         ) : (
           <>
-            <p>{questionsList.length} questions</p>
-            <QuestionList questionList={questionsList} />
+            <p>{questionsList.data.length} questions</p>
+            <QuestionList questionList={questionsList.data} />
           </>
         )}
       </div>

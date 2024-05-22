@@ -5,88 +5,19 @@ import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./QuestionDetails.css";
 import DisplayAnswer from "./DisplayAnswer";
+import { useSelector } from "react-redux";
 
 const QuestionDetails = () => {
   const { id } = useParams();
-  var questionsList = [
-    {
-      _id: "1",
-      upVotes: 3,
-      downVotes: 2,
-      noOfAnswers: 2,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId: 1,
-      askedOn: "jan 1",
-      answer: [
-        {
-          answerBody: "Answer",
-          userAnswered: "Kumar",
-          answeredOn: "jan 2",
-          userId: 2,
-        },{
-            answerBody: "Answer",
-            userAnswered: "Aman",
-            answeredOn: "jan 2",
-            userId: 3,
-          }
-      ]
-    },
-    {
-      _id: "3",
-      upVotes: 3,
-      downVotes: 2,
-      noOfAnswers: 4,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId: 1,
-      askedOn: "jan 1",
-      answer: [
-        {
-          answerBody: "Answer",
-          userAnswered: "Kumar",
-          answeredOn: "jan 2",
-          userId: 2,
-        },
-      ],
-    },
-    {
-      _id: "2",
-      upVotes: 3,
-      downVotes: 2,
-      noOfAnswers: 10,
-      questionTitle: "What is a Function?",
-      questionBody: "What is a Function?",
-      questionTags: ["javascript", "node js"],
-      userPosted: "John Doe",
-      userId: 1,
-      askedOn: "jan 1",
-      answer: [
-        {
-          answerBody: "Answer",
-          userAnswered: "Aman",
-          answeredOn: "jan 2",
-          userId: 2,
-        },{
-            answerBody: "Answer",
-            userAnswered: "Kumar",
-            answeredOn: "jan 2",
-            userId: 3,
-          }
-      ],
-    },
-  ];
+  const questionsList = useSelector((state) => state.questionsReducer);
+
   return (
     <div className="question-details-page">
-      {questionsList === null ? (
+      {questionsList.data === null ? (
         <h1>Loading...</h1>
       ) : (
         <>
-          {questionsList
+          {questionsList.data
             .filter((question) => question._id === id)
             .map((question) => (
               <div key={question._id}>
@@ -94,9 +25,19 @@ const QuestionDetails = () => {
                   <h1>{question.questionTitle}</h1>
                   <div className="question-details-container-2">
                     <div className="question-votes">
-                      <img src={upvote} alt="upvote" width="18" className="votes-icon" />
-                      <p>{question.upVotes - question.downVotes}</p>
-                      <img src={downvote} alt="downvote" width="18" className="votes-icon"/>
+                      <img
+                        src={upvote}
+                        alt="upvote"
+                        width="18"
+                        className="votes-icon"
+                      />
+                      <p>{question.upVote.length - question.downVote.length}</p>
+                      <img
+                        src={downvote}
+                        alt="downvote"
+                        width="18"
+                        className="votes-icon"
+                      />
                     </div>
                     <div style={{ width: "100%" }}>
                       <p className="question-body">{question.questionBody}</p>
