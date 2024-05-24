@@ -31,3 +31,14 @@ export const postAnswer = (answerData) =>async (dispatch)=>{
     console.log(error)
   }
 }
+
+export const deleteQuestion = (id, navigate) => async(dispatch) => {
+  try {
+    const { data } =  api.deleteQuestion(id)
+    //dispatch({type: 'DELETE_QUESTION', payload: id})
+    dispatch(fetchAllQuestions())
+    navigate('/')
+  } catch (error) {
+    console.log(error)
+  }
+}

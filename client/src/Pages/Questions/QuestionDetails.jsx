@@ -9,7 +9,7 @@ import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./QuestionDetails.css";
 import DisplayAnswer from "./DisplayAnswer";
-import {postAnswer} from '../../actions/question.js'
+import {postAnswer, deleteQuestion} from '../../actions/question'
 
 
 const QuestionDetails = () => {
@@ -20,7 +20,7 @@ const QuestionDetails = () => {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-  const url = 'http://locationhost:3000'
+  const url = 'http://localhost:3000'
 
 
   const handlePostAns = (e, answerLength) => {
@@ -33,13 +33,17 @@ const QuestionDetails = () => {
       if(Answer === ''){
         alert('Please Write Something to Post Answer')
       }else{
-        dispatch(postAnswer({id, noOfAnswers: answerLength+1, answerBody: Answer, userAnswered: User.result.name}))
+        dispatch(postAnswer({id, noOfAnswers: answerLength+1, answerBody: Answer, userAnswered: User.result.name, userId: User.result._id}))
       }
     }
   }
-  const handleShare = (e) =>{
+  const handleShare = () =>{
     copy(url+location.pathname)
     alert('Copied url : '+ url+location.pathname)
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteQuestion(id, Navigate))
   }
 
   return (
@@ -80,12 +84,16 @@ const QuestionDetails = () => {
                       <div className="question-action-user">
                         <div>
                           <button type="button" onClick={handleShare}>Share</button>
-                          <button type="button">Delete</button>
+                          {
+                            User?.result?._id === question?.userId && (
+                              <button type="button" onClick={handleDelete}>Delete</button>
+                            )
+                          }
                         </div>
                         <div>
-                          <p>asked {question.askedOn}</p>
+                          <p>asked {moment(question.askedOn).fromNow()}</p>
                           <Link
-                            to={`/User/${moment(question.userId).fromNow()}`}
+                            to={`/User/${question.userId}`}
                             className="user-link"
                             style={{ color: "#0086d8" }}
                           >

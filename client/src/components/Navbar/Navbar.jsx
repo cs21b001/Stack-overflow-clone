@@ -49,7 +49,7 @@ const Navbar = () => {
                 {User.result.name.charAt(0).toUpperCase()}
               </Link>
             </Avatar>
-            <button className="nav-item nav-links">Log out</button>
+            <button className="nav-item nav-links" >Log out</button>
           </>
         )}
       </div>
