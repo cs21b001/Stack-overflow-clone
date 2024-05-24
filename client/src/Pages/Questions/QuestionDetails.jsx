@@ -1,15 +1,35 @@
-import React from "react";
-import { useParams, Link } from "react-router-dom";
+import React , {useState} from "react";
+import { useParams, Link , useNavigate} from "react-router-dom";
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./QuestionDetails.css";
 import DisplayAnswer from "./DisplayAnswer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {postAnswer} from '../../actions/question.js'
 
 const QuestionDetails = () => {
   const { id } = useParams();
   const questionsList = useSelector((state) => state.questionsReducer);
+  const [Answer, setAnswer] = useState('')
+  const User = useSelector((state) => state.currentUserReducer)
+  const Navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handlePostAns = (e, answerLength) => {
+    e.preventDefault()
+    if(User === null){
+      alert('Please Login or SignUp to Post Answer')
+      Navigate('/Auth')
+    }
+    else{
+      if(Answer === ''){
+        alert('Please Write Something to Post Answer')
+      }else{
+        dispatch(postAnswer({id, noOfAnswers: answerLength+1, answerBody: Answer, userAnswered: User.result.name}))
+      }
+    }
+  }
 
   return (
     <div className="question-details-page">
@@ -76,8 +96,8 @@ const QuestionDetails = () => {
                 )}
                 <section className="post-ans-container">
                   <h3>Your Answer</h3>
-                  <form>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                  <form onSubmit={ (e) =>{handlePostAns(e, question.answer.length)}}>
+                    <textarea name="" id="" cols="30" rows="10" onChange={ e => setAnswer(e.target.value)}></textarea>
                     <br />
                     <input
                       type="submit"
