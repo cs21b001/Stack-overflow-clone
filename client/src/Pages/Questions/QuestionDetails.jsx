@@ -1,12 +1,15 @@
 import React , {useState} from "react";
 import { useParams, Link , useNavigate} from "react-router-dom";
+import moment from 'moment'
+import { useSelector, useDispatch } from "react-redux";
+
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./QuestionDetails.css";
 import DisplayAnswer from "./DisplayAnswer";
-import { useSelector, useDispatch } from "react-redux";
 import {postAnswer} from '../../actions/question.js'
+
 
 const QuestionDetails = () => {
   const { id } = useParams();
@@ -74,7 +77,7 @@ const QuestionDetails = () => {
                         <div>
                           <p>asked {question.askedOn}</p>
                           <Link
-                            to={`/User/${question.userId}`}
+                            to={`/User/${moment(question.userId).fromNow()}`}
                             className="user-link"
                             style={{ color: "#0086d8" }}
                           >
