@@ -1,50 +1,67 @@
-import React , {useState} from "react";
-import { useParams, Link , useNavigate, useLocation} from "react-router-dom";
-import moment from 'moment'
+import React, { useState } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
+import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
-import copy from 'copy-to-clipboard'
+import copy from "copy-to-clipboard";
 
 import upvote from "../../assets/sort-up.svg";
 import downvote from "../../assets/sort-down.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./QuestionDetails.css";
 import DisplayAnswer from "./DisplayAnswer";
-import {postAnswer, deleteQuestion} from '../../actions/question'
-
+import {
+  postAnswer,
+  deleteQuestion,
+  voteQuestion,
+} from "../../actions/question";
 
 const QuestionDetails = () => {
   const { id } = useParams();
   const questionsList = useSelector((state) => state.questionsReducer);
-  const [Answer, setAnswer] = useState('')
-  const User = useSelector((state) => state.currentUserReducer)
-  const Navigate = useNavigate()
-  const dispatch = useDispatch()
-  const location = useLocation()
-  const url = 'http://localhost:3000'
-
+  const [Answer, setAnswer] = useState("");
+  const User = useSelector((state) => state.currentUserReducer);
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const url = "http://localhost:3000";
 
   const handlePostAns = (e, answerLength) => {
-    e.preventDefault()
-    if(User === null){
-      alert('Please Login or SignUp to Post Answer')
-      Navigate('/Auth')
-    }
-    else{
-      if(Answer === ''){
-        alert('Please Write Something to Post Answer')
-      }else{
-        dispatch(postAnswer({id, noOfAnswers: answerLength+1, answerBody: Answer, userAnswered: User.result.name, userId: User.result._id}))
+    e.preventDefault();
+    if (User === null) {
+      alert("Please Login or SignUp to Post Answer");
+      Navigate("/Auth");
+    } else {
+      if (Answer === "") {
+        alert("Please Write Something to Post Answer");
+      } else {
+        dispatch(
+          postAnswer({
+            id,
+            noOfAnswers: answerLength + 1,
+            answerBody: Answer,
+            userAnswered: User.result.name,
+            userId: User.result._id,
+          })
+        );
       }
     }
-  }
-  const handleShare = () =>{
-    copy(url+location.pathname)
-    alert('Copied url : '+ url+location.pathname)
-  }
+  };
+  const handleShare = () => {
+    copy(url + location.pathname);
+    alert("Copied url : " + url + location.pathname);
+  };
 
   const handleDelete = () => {
-    dispatch(deleteQuestion(id, Navigate))
-  }
+    dispatch(deleteQuestion(id, Navigate));
+  };
+
+  const handleUpVote = () => {
+    dispatch(voteQuestion(id, "upvote", User.result._id));
+  };
+
+  const handleDownVote = () => {
+    dispatch(voteQuestion(id, "downvote", User.result._id));
+  };
 
   return (
     <div className="question-details-page">
@@ -65,6 +82,7 @@ const QuestionDetails = () => {
                         alt="upvote"
                         width="18"
                         className="votes-icon"
+                        onClick={handleUpVote}
                       />
                       <p>{question.upVote.length - question.downVote.length}</p>
                       <img
@@ -72,6 +90,7 @@ const QuestionDetails = () => {
                         alt="downvote"
                         width="18"
                         className="votes-icon"
+                        onClick={handleDownVote}
                       />
                     </div>
                     <div style={{ width: "100%" }}>
@@ -83,12 +102,14 @@ const QuestionDetails = () => {
                       </div>
                       <div className="question-action-user">
                         <div>
-                          <button type="button" onClick={handleShare}>Share</button>
-                          {
-                            User?.result?._id === question?.userId && (
-                              <button type="button" onClick={handleDelete}>Delete</button>
-                            )
-                          }
+                          <button type="button" onClick={handleShare}>
+                            Share
+                          </button>
+                          {User?.result?._id === question?.userId && (
+                            <button type="button" onClick={handleDelete}>
+                              Delete
+                            </button>
+                          )}
                         </div>
                         <div>
                           <p>asked {moment(question.askedOn).fromNow()}</p>
@@ -110,13 +131,27 @@ const QuestionDetails = () => {
                 {question.noOfAnswers !== 0 && (
                   <section>
                     <h3>{question.noOfAnswers} Answers</h3>
-                    <DisplayAnswer key={question._id} question={question} handleShare= {handleShare}/>
+                    <DisplayAnswer
+                      key={question._id}
+                      question={question}
+                      handleShare={handleShare}
+                    />
                   </section>
                 )}
                 <section className="post-ans-container">
                   <h3>Your Answer</h3>
-                  <form onSubmit={ (e) =>{handlePostAns(e, question.answer.length)}}>
-                    <textarea name="" id="" cols="30" rows="10" onChange={ e => setAnswer(e.target.value)}></textarea>
+                  <form
+                    onSubmit={(e) => {
+                      handlePostAns(e, question.answer.length);
+                    }}
+                  >
+                    <textarea
+                      name=""
+                      id=""
+                      cols="30"
+                      rows="10"
+                      onChange={(e) => setAnswer(e.target.value)}
+                    ></textarea>
                     <br />
                     <input
                       type="submit"
