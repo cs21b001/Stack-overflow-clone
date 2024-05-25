@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 import logo from "../../assets/logo.png";
 import search from "../../assets/search-solid.svg";
@@ -15,7 +15,7 @@ const Navbar = () => {
   useEffect(() => {
     const token = User?.token;
     if (token) {
-      const decodedToken = decode(token);
+      const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
         handleLogout();
       }
@@ -57,7 +57,7 @@ const Navbar = () => {
             <Avatar
               backgroundColor="#009dff"
               px="10px"
-              py="7px"
+              py="5px"
               borderRadius="50%"
               color="white"
             >
