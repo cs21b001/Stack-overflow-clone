@@ -1,6 +1,6 @@
-import React , {useEffect} from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
 import search from "../../assets/search-solid.svg";
 import Avatar from "../../components/Avatar/Avatar";
@@ -8,11 +8,18 @@ import "./Navbar.css";
 import { setCurrentUser } from "../../actions/currentUser";
 
 const Navbar = () => {
-  var User = useSelector((state) => (state.currentUserReducer))
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(setCurrentUser( JSON.parse(localStorage.getItem('profile'))))
-  },[dispatch])
+  var User = useSelector((state) => state.currentUserReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("profile"))));
+  }, [dispatch]);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+    dispatch(setCurrentUser(null));
+  };
   return (
     <nav className="main-nav">
       <div className="navbar">
@@ -49,7 +56,9 @@ const Navbar = () => {
                 {User.result.name.charAt(0).toUpperCase()}
               </Link>
             </Avatar>
-            <button className="nav-item nav-links" >Log out</button>
+            <button className="nav-item nav-links" onClick={handleLogout}>
+              Log out
+            </button>
           </>
         )}
       </div>
