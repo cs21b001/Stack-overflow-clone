@@ -7,6 +7,8 @@ import userRoutes from './routes/users.js'
 import questionRoutes from './routes/Questions.js'
 import answerRoutes from './routes/Answer.js'
 
+
+dotenv.config();
 const DB_URL = process.env.CONNECTION_URL
 
 
