@@ -18,7 +18,6 @@ const DB_URL = process.env.CONNECTION_URL
 //All dependencies are imported correclty
 
 const app = express();
-dotenv.config();
 app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
