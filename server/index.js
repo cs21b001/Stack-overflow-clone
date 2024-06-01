@@ -1,3 +1,4 @@
+import 'abort-controller/polyfill.js';
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
@@ -9,6 +10,7 @@ import answerRoutes from './routes/Answer.js'
 
 
 dotenv.config();
+
 const DB_URL = process.env.CONNECTION_URL
 
 
