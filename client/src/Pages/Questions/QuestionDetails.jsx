@@ -23,7 +23,7 @@ const QuestionDetails = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const url = "http://localhost:3000";
+  const url = "https://stack-overflow-clone-backend-2xqg.onrender.com";
 
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
