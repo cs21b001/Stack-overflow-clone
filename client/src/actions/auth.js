@@ -19,7 +19,6 @@ export const login = (authData, navigate) => async(dispatch) =>{
         dispatch({type: "AUTH", data});
         dispatch(setCurrentUser(JSON.parse(localStorage.getItem("profile"))))
         navigate('/')
-        navigate('/')
     } catch (error) {
         console.log(error)
     }

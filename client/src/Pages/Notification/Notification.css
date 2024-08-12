@@ -1,0 +1,57 @@
+/* NotificationContainer.css */
+
+.notification-container {
+  padding: 20px;
+  background-color: #fdf7e2;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ul .notification-list {
+  border-color: black;
+}
+.notification-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  margin: 2px 0;
+  transition: 0.3s;
+  background-color: #e0e0e0;
+}
+.notification-item:hover {
+  background-color: #fbf3d5;
+}
+.notification-item.unread {
+  background-color: #fce4e4;
+}
+
+/* Color for read notifications */
+.notification-item.read {
+  background-color: #e4f9e0;
+}
+
+.info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.info-header {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.info-footer {
+  margin-right: 10px;
+  font-size: 12px;
+}
+.message-box {
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+}
+.message-box p {
+  padding: 10px;
+  margin: 0;
+}

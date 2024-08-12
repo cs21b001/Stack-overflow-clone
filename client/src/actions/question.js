@@ -59,3 +59,31 @@ export const voteQuestion = (id , value, userId) => async(dispatch) => {
      console.log(error)
    }
 }
+
+export const postReview = (ReviewData) => async(dispatch) => {
+  try {
+    const { id, user_id, question_id, reviewer_id, message } = ReviewData;
+    const { data } = await api.postReview(id, user_id, question_id, reviewer_id, message)
+    dispatch({ type: 'POST_REVIEW', payload: data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const fetchNotification = (id) => async(dispatch) => {
+  try {
+    const { data } = await api.fetchNotification(id)
+    dispatch({ type: 'FETCH_NOTIFICATION', payload: data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const updateNotification = (id) => async(dispatch) =>{
+  try {
+    const { data } = await api.updateNotification(id);
+    dispatch({ type: 'UPDATE_NOTIFICATION', payload: data})
+  } catch (error) {
+    console.log(error)
+  }
+
+}

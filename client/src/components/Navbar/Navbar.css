@@ -70,3 +70,9 @@
 .nav-links:hover{
     background-color: #d3e4eb;
 }
+.bell-logo{
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 5px;
+}

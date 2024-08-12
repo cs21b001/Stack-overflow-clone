@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 
 import logo from "../../assets/logo.png";
+import bell from "../../assets/bell.png"
 import search from "../../assets/search-solid.svg";
 import Avatar from "../../components/Avatar/Avatar";
 import "./Navbar.css";
@@ -54,6 +55,10 @@ const Navbar = () => {
           </Link>
         ) : (
           <>
+            <Link to={`/notification/${User?.result?._id}`} style={{ color: "white", textDecoration: "none", }}>
+              <img src={bell} alt="" className="bell-logo"/>
+            </Link>
+        
             <Avatar
               backgroundColor="#009dff"
               px="10px"

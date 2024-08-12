@@ -9,6 +9,8 @@ import DisplayQuestion from './Pages/Questions/DisplayQuestion'
 import Tags from './Pages/Tags/Tags'
 import Users from './Pages/Users/Users'
 import UserProfile from './Pages/UserProfile/UserProfile'
+import PostReview from './Pages/PostReview/PostReview'
+import NotificationList from './Pages/Notification/NotificationList'
 
 
 const AllRoutes = () => {
@@ -22,6 +24,9 @@ const AllRoutes = () => {
         <Route path='/Tags' element={<Tags/>}/>
         <Route path='/Users' element={<Users/>}/>
         <Route path='/Users/:id' element={<UserProfile/>}/>
+        <Route path='/review/:id' element={<PostReview/>}/>
+        <Route path ='/notification/:id' element={<NotificationList/>}/>
+
 
     </Routes>
   )

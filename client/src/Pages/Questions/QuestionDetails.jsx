@@ -63,6 +63,15 @@ const QuestionDetails = () => {
     dispatch(voteQuestion(id, "downvote", User.result._id));
   };
 
+  const gotoreview = () =>{
+    if (User === null) {
+      alert("Please Login or SignUp to Post Answer");
+      Navigate("/Auth");
+    } else {
+    Navigate(`/review/${id}`)
+    }
+  }
+
   return (
     <div className="question-details-page">
       {questionsList.data === null ? (
@@ -75,6 +84,7 @@ const QuestionDetails = () => {
               <div key={question._id}>
                 <section className="question-details-container">
                   <h1>{question.questionTitle}</h1>
+                  
                   <div className="question-details-container-2">
                     <div className="question-votes">
                       <img
@@ -102,6 +112,7 @@ const QuestionDetails = () => {
                       </div>
                       <div className="question-action-user">
                         <div>
+                        <button type="button"onClick={gotoreview}>Review</button>
                           <button type="button" onClick={handleShare}>
                             Share
                           </button>
